@@ -1,9 +1,10 @@
 require 'test_helper'
+require 'mocha'
 
 class LunchTest < ActiveSupport::TestCase
-  test "should not save lunch without date" do
+  test "should save lunch without date" do
     lunch = lunches(:without_date)
-    assert !lunch.save, "Saved the lunch without a date"
+    assert lunch.save, "Failed to save the lunch without a date"
   end
 
   test "should not save lunch without vendor" do
@@ -33,19 +34,31 @@ class LunchTest < ActiveSupport::TestCase
 
   test "should assign a default price for lunch without price" do
     lunch = lunches(:without_price)
-    assert_equal lunch.price, 5, "Default price is incorrect"
+    assert_equal lunch.price, 10, "Default price is incorrect"
   end
 
   test "should increase the price when saving refundable lunch" do
     lunch = lunches(:without_price)
     lunch.save
-    assert_equal lunch.price, 10, "Non-refunded price is incorrect"
+    assert_equal lunch.price, 10, "Refunded price is incorrect"
   end
 
   test "should not increase the price when saving non-refundable lunch" do
     lunch = lunches(:without_price)
     lunch.refundable = false
     lunch.save
-    assert_equal lunch.price, 5, "Non-refunded price is incorrect"
+    assert_equal lunch.price, 10, "Non-refunded price is incorrect"
   end
+
+  test "should not save two lunches with the same name in one day" do
+    lunch = lunches(:without_price)
+    same_name = 'test name'
+    lunch.name = same_name;
+    assert lunch.save
+
+    lunch = lunches(:one)
+    lunch.name = same_name;
+    assert !lunch.save, "Two lunches with the same name in one day arent allowed"
+  end
+
 end
