@@ -37,11 +37,6 @@ class LunchTest < ActiveSupport::TestCase
     assert_equal 10, lunch.price, "Default price is incorrect"
   end
 
-  test "should increase the price when saving refundable lunch" do
-    lunch = Factory(:lunch)
-    assert_equal 10, lunch.price, "Refunded price is incorrect"
-  end
-
   test "should not increase the price when saving non-refundable lunch" do
     lunch = Factory(:lunch, :refundable => false)
     assert_equal 10, lunch.price, "Non-refunded price is incorrect"

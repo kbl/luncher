@@ -1,7 +1,9 @@
 log/*.log
+log/*.output
 tmp/**/*
 doc/api
 doc/app
 *.swp
 *~
 db/*.sqlite3
+db/schema.rb

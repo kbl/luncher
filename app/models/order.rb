@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
 
   named_scope :by_date, lambda { |date| {:conditions => ["lunches.date = ?", date], :include => :lunch} }
   named_scope :by_user, lambda { |user| {:conditions => {:user_id => user.id} } }
+  named_scope :by_month, lambda { |date| {:conditions => ["strftime('%Y%m', lunches.date) = ?", date.strftime('%Y%m')], :include => :lunch} }
   named_scope :ordered_by_vendor_name, :order => "vendors.name ASC", :include => {:lunch => :vendor}
   named_scope :ordered_by_lunch_name, :order => "lunches.name ASC", :include => :lunch
   named_scope :refundable_lunches, :conditions => ["lunches.refundable = ?", true], :include => :lunch
@@ -19,7 +20,13 @@ class Order < ActiveRecord::Base
 
   def refund
     return_money
-    update_attribute(:total, total - 5)
+    update_attribute(:total, total - Setting.instance.money_refunded_per_lunch)
+  end
+
+  protected
+
+  def validate
+    errors.add_to_base("System is locked, can't process order") if Setting.instance.system_locked
   end
 
   private
