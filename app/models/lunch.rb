@@ -1,4 +1,5 @@
 class Lunch < ActiveRecord::Base
+
   belongs_to :vendor
   has_many :orders
   has_many :users, :through => :orders
@@ -26,6 +27,14 @@ class Lunch < ActiveRecord::Base
                              Setting.instance.lunch_refunding &&
                              user.refunded_lunches_for_date(date).size < Setting.instance.refunded_lunches_per_day
     price
+  end
+
+  # todo do it in one query!
+  def self.find_all_by_date_or_dateless(date, dataless = false)
+    lunches = [] << find_all_by_date(date)
+    return lunches.flatten unless dataless
+    lunches << find_all_by_date(nil)
+    lunches.flatten
   end
 
   def refunded_price

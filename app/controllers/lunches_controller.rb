@@ -1,29 +1,31 @@
 class LunchesController < ApplicationController
+
   before_filter :require_admin, :except => :find_by_date
   before_filter :require_user, :only => :find_by_date
 
   def index
     @date = Date.current
-    @lunches = Lunch.by_date(@date).ordered_by_name
+    @lunches = Lunch.find_all_by_date_or_dateless(@date, true)
   end
 
-  def find_by_date
+  def find_by_date_or_dateless
     @date = Date.civil(params[:year].to_i,
                        params[:month].to_i,
                        params[:day].to_i)
-    @lunches = Lunch.by_date(@date).ordered_by_name
+    @lunches = Lunch.find_all_by_date_or_dateless(@date, params[:includ_dateless])
     respond_to do |format|
       format.html
       format.js
     end
   end
 
-  def show_by_date
+  def show_by_date_or_dateless
     @date = Date.civil(params[:year].to_i,
                        params[:month].to_i,
                        params[:day].to_i)
-    @lunches = Lunch.by_date(@date).ordered_by_name
+    @lunches = Lunch.find_all_by_date_or_dateless(@date, params[:include_dateless])
     respond_to do |format|
+      format.html
       format.js
     end
   end
@@ -37,9 +39,10 @@ class LunchesController < ApplicationController
   end
 
   def create
-#    params[:lunch][:vendor_id] = Vendor.find_by_name(params[:lunch][:vendor]).id
-#    params[:lunch].delete(:vendor)
     @lunch = Lunch.new(params[:lunch])
+    if params[:dateless]
+      @lunch.date = nil
+    end
     if @lunch.save
       flash[:notice] = "Lunch added!"
       redirect_back_or_default lunches_url
@@ -49,8 +52,6 @@ class LunchesController < ApplicationController
   end
 
   def update
-#    params[:lunch][:vendor_id] = Vendor.find_by_name(params[:lunch][:vendor]).id
-#    params[:lunch].delete(:vendor)
     @lunch = Lunch.find(params[:id])
     if @lunch.update_attributes(params[:lunch])
       flash[:notice] = "Lunch info updated!"
@@ -66,4 +67,5 @@ class LunchesController < ApplicationController
     flash[:notice] = "Lunch removed!"
     redirect_to :action => :index
   end
+
 end

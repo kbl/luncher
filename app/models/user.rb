@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   end
 
   def can_order_lunch?(lunch)
-    balance >= lunch.price_for_user(self) && lunch.date >= Date.current
+    balance >= lunch.price_for_user(self) && (!lunch.date or lunch.date >= Date.current)
   end
   
   def pay_for_order(order)

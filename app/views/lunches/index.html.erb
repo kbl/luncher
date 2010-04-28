@@ -1,9 +1,17 @@
 <h2>Available lunch options</h2>
 
-<p><%= select_date @date, :start_year => 2010, :end_year => 2020 %></p>
-<%= observe_field :date_year, :url => { :action => 'show_by_date' }, :with => "'year=' + $('date_year').getValue() + '&month=' + $('date_month').getValue() + '&day=' + $('date_day').getValue()" %>
-<%= observe_field :date_month, :url => { :action => 'show_by_date' }, :with => "'year=' + $('date_year').getValue() + '&month=' + $('date_month').getValue() + '&day=' + $('date_day').getValue()" %>
-<%= observe_field :date_day, :url => { :action => 'show_by_date' }, :with => "'year=' + $('date_year').getValue() + '&month=' + $('date_month').getValue() + '&day=' + $('date_day').getValue()" %>
+<p>
+  <%= select_date @date, :start_year => 2010, :end_year => 2020 %>
+</p>
+<p>
+  <%= label_tag :include_dateless, 'Include dateless?' %>
+  <%= check_box_tag :include_dateless, 'yes', true %>
+</p>
+
+<%= render :partial => 'observe_field', :locals => { :field_name => :date_year } %> 
+<%= render :partial => 'observe_field', :locals => { :field_name => :date_month } %> 
+<%= render :partial => 'observe_field', :locals => { :field_name => :date_day } %> 
+<%= render :partial => 'observe_field', :locals => { :field_name => :include_dateless } %> 
 
 <p><%= link_to "Add lunch option", new_lunch_path %></p>
 <p>

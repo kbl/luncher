@@ -5,9 +5,9 @@ class Order < ActiveRecord::Base
   validates_presence_of :lunch_id
   validates_presence_of :user_id
 
-  named_scope :by_date, lambda { |date| {:conditions => ["lunches.date = ?", date], :include => :lunch} }
+  named_scope :by_date, lambda { |date| {:conditions => {:lunch_date=> date} } }
   named_scope :by_user, lambda { |user| {:conditions => {:user_id => user.id} } }
-  named_scope :by_month, lambda { |date| {:conditions => ["strftime('%Y%m', lunches.date) = ?", date.strftime('%Y%m')], :include => :lunch} }
+  named_scope :by_month, lambda { |date| {:conditions => ["strftime('%Y%m', date) = ?", date.strftime('%Y%m')] } }
   named_scope :ordered_by_vendor_name, :order => "vendors.name ASC", :include => {:lunch => :vendor}
   named_scope :ordered_by_lunch_name, :order => "lunches.name ASC", :include => :lunch
   named_scope :refundable_lunches, :conditions => ["lunches.refundable = ?", true], :include => :lunch

@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody id='lunches_list'>
-      <% Lunch.by_date(@date).ordered_by_name.each do |lunch| %>
+      <% Lunch.find_all_by_date_or_dateless(@date, true).each do |lunch| %>
         <%= render :partial => "lunches/lunch_to_order", :object => lunch %>
       <% end %>
     </tbody>

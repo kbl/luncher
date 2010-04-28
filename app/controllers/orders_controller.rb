@@ -58,6 +58,7 @@ class OrdersController < ApplicationController
 
   def create
     order = Order.new(params[:order])
+    
     order.user_id = current_user.id
     order.total = order.lunch.price_for_user(order.user)
     if order.save

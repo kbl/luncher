@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.connect 'lunches/find_by_date', :controller => 'lunches', :action => 'find_by_date'
-  map.connect 'lunches/show_by_date', :controller => 'lunches', :action => 'show_by_date'
+  map.connect 'lunches/show_by_date_or_dateless', :controller => 'lunches', :action => 'show_by_date_or_dateless'
   map.connect 'lunches/:year/:month/:day',
               :controller => 'lunches',
               :action     => 'find_by_date',
