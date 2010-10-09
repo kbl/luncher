@@ -9,6 +9,7 @@ class Order < ActiveRecord::Base
   named_scope :ordered_by_vendor_name, :order => "vendors.name ASC", :include => {:lunch => :vendor}
   named_scope :ordered_by_lunch_name, :order => "lunches.name ASC", :include => :lunch
   named_scope :incomplete, :conditions => {:complete => false}
+  named_scope :ordered_today, :conditions => ['orders.created_at = ?', Date.current]
   
 
 

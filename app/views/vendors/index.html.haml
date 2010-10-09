@@ -1,0 +1,22 @@
+%h2
+  = t '.lunch_vendors'
+%table
+  - @vendors.each do |v|
+    %tr
+      %td
+        = v.name
+      %td
+        = link_to t('edit_link'), edit_vendor_path(v)
+      %td
+        = link_to t('remove_link'), vendor_path(v), :method => :delete, :confirm => t('.sure_to_remove_vendor')
+      %td
+        - if v.has_incomplete_orders?
+          = link_to t('.mark_orders_as_complete'), {:action => 'mark_orders_complete', :id => v.id}
+      %td
+        - if v.notification_sent_today?
+          = t '.notification_already_sent' 
+          = link_to t('.click_to_resend'), {:action => 'notify_users', :id => v.id}, :confirm => "Are you sure you want to send another e-mail notification to users?"
+        - else
+          = link_to t('.send_email_notification'), {:action => 'notify_users', :id => v.id}
+
+= link_to t('.add_vendor_link'), new_vendor_path
