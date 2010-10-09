@@ -23,6 +23,7 @@ class OrderTest < ActiveSupport::TestCase
   end
 end
 
+
 # == Schema Information
 #
 # Table name: orders
@@ -33,7 +34,6 @@ end
 #  total      :float           default(0.0)
 #  created_at :datetime
 #  updated_at :datetime
-#  lunch_date :date
 #  complete   :boolean         default(FALSE)
 #
 

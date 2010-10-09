@@ -1,0 +1,12 @@
+%h2
+  - if @user == current_user
+    = t '.edit_my_account'
+  - else
+    = t '.edit_users_account', :name => @user.login
+
+- form_for @user, :url => user_path(@user) do |f|
+  = f.error_messages
+  = render :partial => 'form', :object => f
+  = f.submit t('.update_button')
+
+= link_to t('.my_profile_link'), user_path(@user)

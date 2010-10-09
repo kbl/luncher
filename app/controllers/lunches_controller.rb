@@ -2,33 +2,11 @@ class LunchesController < ApplicationController
 
   def index
     @date = Date.current
-    @lunches = Lunch.find_all_by_date_or_dateless(@date, true)
-  end
-
-  def find_by_date_or_dateless
-    @date = Date.civil(params[:year].to_i,
-                       params[:month].to_i,
-                       params[:day].to_i)
-    @lunches = Lunch.find_all_by_date_or_dateless(@date, params[:includ_dateless])
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
-
-  def show_by_date_or_dateless
-    @date = Date.civil(params[:year].to_i,
-                       params[:month].to_i,
-                       params[:day].to_i)
-    @lunches = Lunch.find_all_by_date_or_dateless(@date, params[:include_dateless])
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @lunches = Lunch.all 
   end
 
   def new
-    @lunch = Lunch.new(:name => Lunch.first_available_name_for_date(Date.current))
+    @lunch = Lunch.new
   end
 
   def edit
@@ -37,9 +15,6 @@ class LunchesController < ApplicationController
 
   def create
     @lunch = Lunch.new(params[:lunch])
-    if params[:dateless]
-      @lunch.date = nil
-    end
     if @lunch.save
       flash[:notice] = "Lunch added!"
       redirect_back_or_default lunches_url

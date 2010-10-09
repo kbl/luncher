@@ -1,0 +1,21 @@
+%h2
+  = t '.available_lunch_options'
+
+%p
+  = link_to t('.add_lunch_option_link'), new_lunch_path
+%p
+  %table
+    %thead
+      %tr
+        %th
+          = Lunch.human_attribute_name(:vendor)
+        %th
+          = t '.name'
+        %th
+          = Lunch.human_attribute_name(:description)
+        %th
+          = Lunch.human_attribute_name(:price)
+        %th
+          Action
+    %tbody#lunches_list
+      = render :partial => 'lunch_to_show', :collection => @lunches

@@ -7,6 +7,8 @@ class UserGroup < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :name
+
+  named_scope :without_administrators, :conditions => ['name != ?', ADMINS]
   
   def all_users
     User.find_by_sql <<-SQL

@@ -1,0 +1,21 @@
+%h2
+  = t '.settings'
+
+- form_for @setting, :url => settings_path do |f|
+  = f.error_messages
+
+  %p
+    - if @setting.system_locked
+      = t('.system_locked') 
+      = link_to t('.click_to_unlock'), :action => :unlock_system
+    - else
+      = t('.system_unlocked') 
+      = link_to t('.click_to_lock'), :action => :lock_system
+  %p
+    = f.label :automatic_locking, t('.automatic_system_locking')
+    = f.check_box :automatic_locking
+  %p
+    = f.label :automatic_locking_time, t('.lock_system_daily_at')
+    = f.time_select :automatic_locking_time
+  %p
+    = f.submit t('.save_button')

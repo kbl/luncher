@@ -1,0 +1,25 @@
+%p
+  = form.label :login
+  = form.text_field :login, :readonly => (not form.object.new_record?)
+%p
+  = form.label :password, form.object.new_record? ? nil : t('.change_password')
+  = form.password_field :password
+%p
+  = form.label :password_confirmation
+  = form.password_field :password_confirmation
+%p
+  = form.label :first_name
+  = form.text_field :first_name
+%p
+  = form.label :last_name
+  = form.text_field :last_name
+%p
+  = form.label :email
+  = form.text_field :email
+%p
+  = form.label :email_notification_enabled, t('.notify_by_email')
+  = form.check_box :email_notification_enabled
+- if current_user && current_user.is_admin?
+  %p
+    = form.label :user_groups
+    = form.collection_select :user_group_ids, UserGroup.without_administrators, :id, :name, {}, {:multiple => true}

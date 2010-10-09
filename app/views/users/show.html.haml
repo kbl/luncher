@@ -1,0 +1,21 @@
+%p
+  %b
+    = User.human_attribute_name(:login)
+  = h @user.login
+
+%p
+  %b
+    = User.human_attribute_name(:first_name) 
+  =h @user.first_name
+
+%p
+  %b
+    = User.human_attribute_name(:last_name)
+  = h @user.last_name
+
+%p
+  %b
+    = User.human_attribute_name(:email)
+  = h @user.email
+
+= link_to t('edit_link'), edit_user_path(@user)

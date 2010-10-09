@@ -1,7 +1,0 @@
-<h2><%= t '.add_new_lunch' %></h2>
-
-<% form_for @lunch, :url => lunches_path do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => "form", :locals => {:form => f, :lunch => @lunch} %>
-  <%= f.submit t('add') %>
-<% end %>

@@ -14,7 +14,6 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       flash[:notice] = "Account registered!"
-      add_lockdown_session_values(@user)
       redirect_to account_url
     else
       render :action => :new
@@ -24,7 +23,7 @@ class UsersController < ApplicationController
   def show
     # redirect to /account if non-admin user tries to access others
     # Can't do this with lockdown as /account doesn't provide :id
-    unless current_user_is_admin? or @user.id == current_user.id
+    unless current_user.is_admin? or @user.id == current_user.id
       redirect_to account_url
     end
     store_location
@@ -46,7 +45,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if current_user_is_admin?
+    if current_user.is_admin?
       user = User.find(params[:id])
       user.destroy
       flash[:notice] = "User #{user.login} deleted!"
@@ -55,6 +54,7 @@ class UsersController < ApplicationController
   end
 
   private
+
   def fetch_user
     if params[:id]
         @user = User.find(params[:id])

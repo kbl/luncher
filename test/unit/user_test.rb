@@ -14,6 +14,7 @@ class UserTest < ActiveSupport::TestCase
   end
 end
 
+
 # == Schema Information
 #
 # Table name: users
@@ -25,7 +26,6 @@ end
 #  email                      :string(255)     not null
 #  first_name                 :string(255)     not null
 #  last_name                  :string(255)     not null
-#  balance                    :float           default(0.0)
 #  crypted_password           :string(255)     not null
 #  password_salt              :string(255)     not null
 #  persistence_token          :string(255)     not null

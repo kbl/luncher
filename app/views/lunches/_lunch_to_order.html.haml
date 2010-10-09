@@ -1,0 +1,16 @@
+%tr
+  %td#radio
+    - if !Setting.instance.system_locked
+      = radio_button :order, :lunch_id, lunch_to_order.id
+    - else
+      = radio_button :order, :lunch_id, lunch_to_order.id, :disabled => 'true'
+  %td{:align => 'center'}
+    = lunch_to_order.vendor
+  %td{:align => 'center'}
+    = lunch_to_order.name
+  %td
+    = lunch_to_order.description
+  %td
+    = to_currency lunch_to_order.price
+  %td
+    = to_currency lunch_to_order.discount_price

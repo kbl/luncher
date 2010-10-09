@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   has_and_belongs_to_many :user_groups
   has_many :orders
   has_many :lunches, :through => :orders
@@ -15,7 +16,7 @@ class User < ActiveRecord::Base
               :order => "last_name ASC"
 
   def editor_ids
-    ug = UserGroup.find_by_name('Usersadmin')
+    ug = UserGroup.find_by_name(UserGroup::ADMINS)
     # Return the user_ids associated to the user group plus this user's id
     ug.user_ids | [self.id]
   end
@@ -28,28 +29,13 @@ class User < ActiveRecord::Base
   def full_name
     [last_name, first_name].join(' ')
   end
-  
-  def refunded_lunches_for_date(date)
-    orders.by_date(date).refundable_lunches
-  end
-
-  def can_order_lunch?(lunch)
-    balance >= lunch.price_for_user(self) && (!lunch.date or lunch.date >= Date.current)
-  end
-  
-  def pay_for_order(order)
-    update_attribute(:balance, balance - order.total)
-  end
-  
-  def return_money_for_order(order)
-    update_attribute(:balance, balance + order.total)
-  end
 
   def is_admin?
     user_groups.map { |g| g.name }.include?(UserGroup::ADMINS)
   end
 
 end
+
 
 # == Schema Information
 #
@@ -62,7 +48,6 @@ end
 #  email                      :string(255)     not null
 #  first_name                 :string(255)     not null
 #  last_name                  :string(255)     not null
-#  balance                    :float           default(0.0)
 #  crypted_password           :string(255)     not null
 #  password_salt              :string(255)     not null
 #  persistence_token          :string(255)     not null

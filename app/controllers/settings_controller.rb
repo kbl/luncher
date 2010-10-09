@@ -1,25 +1,17 @@
 class SettingsController < ApplicationController
 
-  # GET /settings/1/edit
   def edit
     @setting = Setting.instance
   end
 
-  # PUT /settings/1
-  # PUT /settings/1.xml
   def update
     @setting = Setting.instance
 
-    respond_to do |format|
-      if @setting.update_attributes(params[:setting])
-        flash[:notice] = 'Settings saved!'
-        format.html { render :action => "edit" }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @setting.errors, :status => :unprocessable_entity }
-      end
+    if @setting.update_attributes(params[:setting])
+      flash[:notice] = 'Settings saved!'
     end
+
+    render :action => 'edit'
   end
 
   def unlock_system
@@ -33,4 +25,5 @@ class SettingsController < ApplicationController
     flash[:notice] = 'System locked.'
     redirect_to :action => :edit
   end
+
 end

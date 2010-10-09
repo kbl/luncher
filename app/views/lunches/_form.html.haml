@@ -1,0 +1,13 @@
+%p
+  = form.label :vendor_id, 'Vendor'
+  = form.select :vendor_id, options_for_select(Vendor.all_available.map {|v| [v.name, v.id]})
+%p
+  = form.label :name 
+  = form.text_field :name, :size => 5
+%p
+  = form.label :description
+  = form.text_area :description, :rows => 5
+%p
+  = form.label :price, t('price'), :id => 'price_label'
+  = form.text_field :price, :size => 5
+  zł

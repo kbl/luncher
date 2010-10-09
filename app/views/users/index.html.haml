@@ -1,0 +1,23 @@
+%h2
+  = t '.user_list'
+
+- unless @users.empty?
+  %table
+    %thead
+      %tr
+        %th{:align => 'center'}
+          = t '.name'
+        %th
+          = User.human_attribute_name(:login)
+        %th
+          Actions
+    %tbody
+    - @users.each do |u|
+      %tr
+        %td
+          = u.full_name
+        %td
+          = link_to "#{u.login}", user_path(u)
+        %td
+          = link_to t('.edit_account_link'), edit_user_path(u)
+          = link_to t('.remove_account_link'), user_path(u), :method => :delete, :confirm => t('.sure_to_remove_account', :name => u.full_name)
