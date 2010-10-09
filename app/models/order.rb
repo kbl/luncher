@@ -69,3 +69,18 @@ class Order < ActiveRecord::Base
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: orders
+#
+#  id         :integer         not null, primary key
+#  lunch_id   :integer
+#  user_id    :integer
+#  total      :float           default(0.0)
+#  created_at :datetime
+#  updated_at :datetime
+#  lunch_date :date
+#  complete   :boolean         default(FALSE)
+#
+

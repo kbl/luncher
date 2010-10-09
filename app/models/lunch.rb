@@ -67,3 +67,20 @@ class Lunch < ActiveRecord::Base
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: lunches
+#
+#  id          :integer         not null, primary key
+#  date        :date
+#  name        :string(255)
+#  description :text
+#  price       :float           default(10.0)
+#  refundable  :boolean         default(TRUE)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  vendor_id   :integer
+#  available   :boolean         default(TRUE)
+#
+

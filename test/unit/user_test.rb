@@ -13,3 +13,29 @@ class UserTest < ActiveSupport::TestCase
                  "Full name is different than last_name-space-first_name"
   end
 end
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id                         :integer         not null, primary key
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  login                      :string(255)     not null
+#  email                      :string(255)     not null
+#  first_name                 :string(255)     not null
+#  last_name                  :string(255)     not null
+#  balance                    :float           default(0.0)
+#  crypted_password           :string(255)     not null
+#  password_salt              :string(255)     not null
+#  persistence_token          :string(255)     not null
+#  perishable_token           :string(255)     not null
+#  login_count                :integer         default(0), not null
+#  last_request_at            :datetime
+#  last_login_at              :datetime
+#  current_login_at           :datetime
+#  last_login_ip              :string(255)
+#  current_login_ip           :string(255)
+#  email_notification_enabled :boolean         default(TRUE)
+#
+
