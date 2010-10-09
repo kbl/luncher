@@ -1,18 +1,27 @@
-<h2>Lunch vendors</h2>
+<h2><%= t '.lunch_vendors' %></h2>
 
-<ol>
+<table>
 <% @vendors.each do |v| %>
-  <li>
-    <%= v.name %>
-    <%= link_to "Edit", edit_vendor_path(v) %>
-    <%= link_to "Remove", vendor_path(v), :method => :delete %>
-    - <%= pluralize v.orders_count_for_date(Date.current), "order" %> for today
-    <% if v.notification_sent_today? %>
-    - Notification already sent today, <%= link_to "click to resend", {:action => 'notify_users', :id => v.id}, :confirm => "Are you sure you want to send another e-mail notification to users?" %>
-    <% else %>
-    - <%= link_to "Send e-mail notification", {:action => 'notify_users', :id => v.id} %>
+  <tr>
+    <td><%= v.name %></td>
+    <td><%= link_to t('edit_link'), edit_vendor_path(v) %></td>
+    <td><%= link_to t('remove_link'), vendor_path(v), :method => :delete, :confirm => t('.sure_to_remove_vendor') %></td>
+    <td><%= pluralize v.orders_count_for_date(Date.current), "order" %> <%= t '.for_today' %></td>
+    <td>
+    <% if v.has_incomplete_orders_for_date?(Date.current) %>
+      <%= link_to t('.mark_orders_as_complete'), {:action => 'mark_orders_complete', :id => v.id} %>
+    <% elsif !v.orders_count_for_date(Date.current).zero? %>
+      <%= link_to t('.mark_orders_as_new'), {:action => 'mark_orders_new', :id => v.id} %>
     <% end %>
-  </li>
+    </td>
+    <td>
+    <% if v.notification_sent_today? %>
+      <%= t '.notification_already_sent' %>, <%= link_to t('.click_to_resend'), {:action => 'notify_users', :id => v.id}, :confirm => "Are you sure you want to send another e-mail notification to users?" %>
+    <% else %>
+      <%= link_to t('.send_email_notification'), {:action => 'notify_users', :id => v.id} %>
+    <% end %>
+    </td>
+  </tr>
 <% end %>
-</ol>
-<%= link_to "Add vendor", new_vendor_path %>
+</table>
+<%= link_to t('.add_vendor_link'), new_vendor_path %>

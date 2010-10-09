@@ -1,8 +1,5 @@
 class LunchesController < ApplicationController
 
-  before_filter :require_admin, :except => :find_by_date
-  before_filter :require_user, :only => :find_by_date
-
   def index
     @date = Date.current
     @lunches = Lunch.find_all_by_date_or_dateless(@date, true)
@@ -63,8 +60,13 @@ class LunchesController < ApplicationController
 
   def destroy
     lunch = Lunch.find(params[:id])
-    lunch.destroy
-    flash[:notice] = "Lunch removed!"
+    if lunch.removable?
+      flash[:notice] = "Lunch removed!" if lunch.destroy
+    elsif lunch.has_pending_orders?
+      flash[:notice] = "There are pending orders for this lunch, it can't be removed"
+    else
+      flash[:notice] = "Lunch removed!" if lunch.update_attribute(:available, false)
+    end
     redirect_to :action => :index
   end
 

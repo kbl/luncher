@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-  before_filter :require_admin, :only => [:find_all_by_date, :find_by_month, :index]
-  before_filter :require_user, :except => [:find_all_by_date, :find_by_month, :index]
 
   def index
     @date = Date.current
@@ -74,7 +72,11 @@ class OrdersController < ApplicationController
     order = Order.find(params[:id])
     order.destroy
     flash[:notice] = "Order removed!"
-    redirect_to :action => :my
+    if current_user_is_admin?
+      redirect_to :action => :index
+    else
+      redirect_to :action => :my
+    end
   end
 
 end

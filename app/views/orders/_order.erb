@@ -5,7 +5,18 @@
   <td>
     <%= to_currency order.total %>
   </td>
-  <td>
-    <%= link_to "Remove", order_path(order), :method => :delete %>
-  </td>
+  <% if order.complete %>
+    <td>
+      <%= t('.complete') %>
+    </td>
+  <% else %>
+    <td>
+      <%= t('.new') %>
+    </td>
+    <% unless Setting.instance.system_locked %>
+      <td>
+        <%= link_to t('.cancel_order'), order_path(order), :method => :delete %>
+      </td>
+    <% end %>
+  <% end %>
 </tr>

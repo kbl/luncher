@@ -1,10 +1,11 @@
 <% unless orders.empty? %>
-  <p><b>Total:</b> <%= pluralize orders.values.inject { |res,val| res + val }.size, "order" %></p>
+  <p><b><%= t '.total' %>:</b> <%= pluralize orders.values.inject { |res,val| res + val }.size, "order" %></p>
   <% orders.each_key do |vendor| %>
     <p><%= vendor %> - <%= pluralize orders[vendor].size, "order" %>:
       <ul>
         <% orders[vendor].each do |o| %>
-          <li><%= o.lunch.name %> - <%= o.user.full_name %></li>
+          <li><%= o.lunch.name %> - <%= o.user.full_name %> - <%= o.status %>
+              <%= link_to t('.cancel_order'), o, :method => :delete %></li>
         <% end %>
       </ul>
     </p>
