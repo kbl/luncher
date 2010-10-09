@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def show
     # redirect to /account if non-admin user tries to access others
     # Can't do this with lockdown as /account doesn't provide :id
-    unless current_user_is_admin? or @user.id == current_user_id
+    unless current_user_is_admin? or @user.id == current_user.id
       redirect_to account_url
     end
     store_location
