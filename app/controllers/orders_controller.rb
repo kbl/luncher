@@ -18,7 +18,6 @@ class OrdersController < ApplicationController
     order = Order.new(params[:order])
     
     order.user_id = current_user.id
-    order.total = order.lunch.price
     if order.save
       flash[:notice] = "Lunch ordered!"
       redirect_to :action => :my

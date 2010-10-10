@@ -17,7 +17,7 @@ class LunchesController < ApplicationController
     @lunch = Lunch.new(params[:lunch])
     if @lunch.save
       flash[:notice] = "Lunch added!"
-      redirect_back_or_default lunches_url
+      redirect_to lunches_url
     else
       render :action => :new
     end
