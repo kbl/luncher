@@ -3,26 +3,22 @@
 %table
   %thead
     %tr
-      %td
-        %b
-          = Lunch.human_attribute_name(:vendor_id)
-      %td
-        %b
-          = t '.id'
-      %td
-        %b
-          = Lunch.human_attribute_name(:description)
-      %td
-        %b
-          = Lunch.human_attribute_name(:price)
-      %td
-        %b
-          = Lunch.human_attribute_name(:discounted_price)
-      %td
-        %b
-          = t '.status'
+      %th
+        = Lunch.human_attribute_name(:vendor_id)
+      %th
+        = t '.id'
+      %th
+        = Lunch.human_attribute_name(:description)
+      %th
+        = Lunch.human_attribute_name(:price)
+      %th
+        = Lunch.human_attribute_name(:discounted_price)
+      %th
+        = t '.status'
+      %th
+        Action 
   %tbody#orders_list
-    = render :partial => "order", :collection => @orders
+    = render :partial => 'order', :collection => @orders
 
 %p
   = link_to t('.place_order_link'), new_order_path

@@ -1,0 +1,19 @@
+%tr
+  %td{:align => 'center'}
+    = order.lunch.vendor
+  %td{:align => 'center'}
+    = order.lunch.name
+  %td
+    = order.lunch.description
+  %td
+    = to_currency order.lunch.price
+  %td
+    = to_currency order.lunch.discount_price
+  %td
+    - if order.complete
+      = t('.complete')
+    - else
+      = t('.new')
+  %td
+    - unless Setting.instance.system_locked
+      = link_to t('.cancel_order'), order_path(order), :method => :delete

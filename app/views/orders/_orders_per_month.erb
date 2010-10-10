@@ -1,6 +1,0 @@
-<% unless orders_per_month.empty? %>
-  <p><b><%= t '.total' %>:</b> <%= pluralize orders_per_month.values.inject { |res,val| res + val }.size, "order" %></p>
-  <% orders_per_month.each_key do |vendor| %>
-    <p><%= vendor %> - <%= pluralize orders_per_month[vendor].size, "order" %></p>
-  <% end %>
-<% end %>

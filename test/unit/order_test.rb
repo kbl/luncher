@@ -24,6 +24,7 @@ class OrderTest < ActiveSupport::TestCase
 end
 
 
+
 # == Schema Information
 #
 # Table name: orders
@@ -31,7 +32,6 @@ end
 #  id         :integer         not null, primary key
 #  lunch_id   :integer
 #  user_id    :integer
-#  total      :float           default(0.0)
 #  created_at :datetime
 #  updated_at :datetime
 #  complete   :boolean         default(FALSE)
